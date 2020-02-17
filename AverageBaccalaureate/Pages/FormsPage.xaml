@@ -1,0 +1,473 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AverageBaccalaureate.Converter"
+             xmlns:iOS="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             iOS:Page.UseSafeArea="True"
+             x:Class="AverageBaccalaureate.Pages.FormsPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:NegateBooleanConverter x:Key="boolInverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid VerticalOptions="FillAndExpand"
+                 HorizontalOptions="FillAndExpand"
+                 BackgroundColor="#4682B4"
+                 Padding="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Frame Padding="10"
+                CornerRadius="10"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                BackgroundColor="WhiteSmoke"
+                Grid.Row="0">
+            <Grid>
+                <StackLayout x:Name="FranceStack" IsVisible="False">
+                    <Grid BackgroundColor="Transparent"
+                        HeightRequest="30"
+                        ColumnSpacing="6"
+                        Padding="3"
+                        Margin="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label  Text="Matière" 
+                                Grid.Column="0"
+                                FontSize="14" 
+                                FontAttributes="Bold"
+                                TextColor="Black" 
+                                HorizontalTextAlignment="Start" 
+                                HorizontalOptions="StartAndExpand"
+                                VerticalOptions="Start"/>
+                        <Label Text="Coeff" 
+                                Grid.Column="2"
+                                FontSize="14" 
+                                FontAttributes="Bold"
+                                TextColor="Black" 
+                                VerticalOptions="Start" 
+                                HorizontalOptions="StartAndExpand"
+                                HorizontalTextAlignment="Start"/>
+                        <Label Grid.Column="3"
+                                Text="Note" 
+                                FontSize="14" 
+                                FontAttributes="Bold"
+                                TextColor="Black" 
+                                VerticalOptions="Start" 
+                                HorizontalOptions="StartAndExpand"
+                                HorizontalTextAlignment="Start"/>
+                    </Grid>
+                    <ListView ItemsSource="{Binding GroupedSubjectCoeffs}" 
+                              SelectionMode="None"
+                              HasUnevenRows="True"
+                              IsGroupingEnabled="true" 
+                              GroupDisplayBinding="{Binding LongName}" 
+                              GroupShortNameBinding="{Binding ShortName}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid RowSpacing="0" 
+                                          ColumnSpacing="0"
+                                          Padding="1,0,1,1"
+                                          Margin="0"
+                                          BackgroundColor="#4682B4">
+                                        <Grid BackgroundColor="White"
+                                              RowSpacing="0" 
+                                              ColumnSpacing="6"
+                                              Padding="2"
+                                              Margin="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="5*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" >
+                                                <Picker VerticalOptions="CenterAndExpand"
+                                                        HorizontalOptions="FillAndExpand"
+                                                        Margin="-2,0,0,0"
+                                                        ItemsSource="{Binding ListNames}"
+                                                        Title="{Binding ListTitle}"
+                                                        ItemDisplayBinding="{Binding Name}"
+                                                        IsVisible="{Binding ShowCourseName, Converter={StaticResource boolInverter}}"
+                                                        BackgroundColor="White"
+                                                        FontSize="14"
+                                                        TitleColor="Black"
+                                                        TextColor="Black"
+                                                        SelectedItem="{Binding SelectedItemFromList, Mode=TwoWay}"/>
+                                                <StackLayout VerticalOptions="CenterAndExpand" 
+                                                             HorizontalOptions="StartAndExpand"
+                                                             BackgroundColor="White"
+                                                             IsVisible="{Binding ShowCourseName, Mode=TwoWay}">
+                                                    <Label Text="{Binding Name, Mode=TwoWay}" FontSize="14" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="Start"/>
+                                                    <Label Text="{Binding Type, Mode=TwoWay}" FontSize="12" TextColor="DarkSlateGray" HorizontalTextAlignment="Start" VerticalOptions="End"/>
+                                                </StackLayout>
+                                            </Grid>
+                                            <Switch Grid.Column="0" 
+                                                    IsVisible="{Binding ShowSwitchToGetCoeff,Mode=TwoWay}"
+                                                    IsToggled="{Binding SwitchToGetCoeff,Mode=TwoWay}"
+                                                    VerticalOptions="CenterAndExpand" 
+                                                    HorizontalOptions="EndAndExpand"/>
+                                            <CheckBox Grid.Column="1"
+                                                      IsVisible="{Binding ShowCoefficientChangeable, Mode=TwoWay}"
+                                                      IsChecked="{Binding CoefficientChangeable, Mode=TwoWay}"/>
+                                            <StackLayout Grid.Column="2"
+                                                         IsVisible="{Binding SwitchToGetCoeff, Mode=TwoWay}"
+                                                         VerticalOptions="FillAndExpand" 
+                                                         HorizontalOptions="StartAndExpand">
+                                                <Label Text="{Binding ActualCoefficient, StringFormat='{0:00.}'}" 
+                                                       FontSize="14" 
+                                                       TextColor="Black" 
+                                                       VerticalOptions="CenterAndExpand" 
+                                                       HorizontalOptions="StartAndExpand"
+                                                       HorizontalTextAlignment="Start"/>
+                                            </StackLayout>
+                                            <StackLayout Grid.Column="3"
+                                                         IsVisible="{Binding SwitchToGetCoeff, Mode=TwoWay}"
+                                                         VerticalOptions="FillAndExpand" 
+                                                         HorizontalOptions="EndAndExpand">
+                                                <Frame BorderColor="Black"
+                                                       VerticalOptions="CenterAndExpand" 
+                                                       HorizontalOptions="StartAndExpand"
+                                                       Padding="0">
+                                                    <Entry Placeholder="Note" 
+                                                       WidthRequest="80"
+                                                       Margin="0,0,2,2"
+                                                       MaxLength="5"
+                                                       Text="{Binding Note, Mode=TwoWay}" 
+                                                       VerticalOptions="CenterAndExpand" 
+                                                       HorizontalOptions="FillAndExpand" 
+                                                       Keyboard="Numeric"/>
+                                                </Frame>
+                                            </StackLayout>
+                                        </Grid>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <!-- Group Header Customization-->
+                        <ListView.GroupHeaderTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout BackgroundColor="#4682B4">
+                                        <Label Text="{Binding LongName}" TextColor="White" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.GroupHeaderTemplate>
+                        <!-- End Group Header Customization -->
+                    </ListView>
+                    <Button x:Name="ButtonCalculate"
+                            BackgroundColor="White"
+                            BorderColor="LightGray"
+                            VerticalOptions="EndAndExpand"
+                            BorderWidth="1"
+                            Text="Calculer la note"
+                            TextColor="Black"
+                            Clicked="Calculer_Clicked"/>
+                </StackLayout>
+                <StackLayout x:Name="MorocOption1Stack" IsVisible="False" Spacing="30">
+                    <ListView ItemsSource="{Binding GroupedSubjectCoeffs}" 
+                              SelectionMode="None"
+                              HasUnevenRows="True"
+                              IsGroupingEnabled="true" 
+                              GroupDisplayBinding="{Binding LongName}" 
+                              GroupShortNameBinding="{Binding ShortName}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid RowSpacing="0" 
+                                          ColumnSpacing="0"
+                                          Padding="1,0,1,1"
+                                          Margin="0"
+                                          BackgroundColor="#4682B4">
+                                        <Grid BackgroundColor="White"
+                                              RowSpacing="0" 
+                                              ColumnSpacing="6"
+                                              Padding="2"
+                                              Margin="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="5*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" >
+                                                <Picker VerticalOptions="CenterAndExpand"
+                                                        HorizontalOptions="FillAndExpand"
+                                                        Margin="-2,0,0,0"
+                                                        ItemsSource="{Binding ListNames}"
+                                                        Title="{Binding ListTitle}"
+                                                        ItemDisplayBinding="{Binding Name}"
+                                                        IsVisible="{Binding ShowCourseName, Converter={StaticResource boolInverter}}"
+                                                        BackgroundColor="White"
+                                                        FontSize="14"
+                                                        TitleColor="Black"
+                                                        TextColor="Black"
+                                                        SelectedItem="{Binding SelectedItemFromList, Mode=TwoWay}"/>
+                                                <StackLayout VerticalOptions="CenterAndExpand" 
+                                                             HorizontalOptions="StartAndExpand"
+                                                             BackgroundColor="White"
+                                                             IsVisible="{Binding ShowCourseName, Mode=TwoWay}">
+                                                    <Label Text="{Binding Name, Mode=TwoWay}" FontSize="14" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="CenterAndExpand"/>
+                                                </StackLayout>
+                                            </Grid>
+                                            <Switch Grid.Column="0" 
+                                                    IsVisible="{Binding ShowSwitchToGetCoeff,Mode=TwoWay}"
+                                                    IsToggled="{Binding SwitchToGetCoeff,Mode=TwoWay}"
+                                                    VerticalOptions="CenterAndExpand" 
+                                                    HorizontalOptions="EndAndExpand"/>
+                                            <CheckBox Grid.Column="1"
+                                                      IsVisible="{Binding ShowCoefficientChangeable, Mode=TwoWay}"
+                                                      IsChecked="{Binding CoefficientChangeable, Mode=TwoWay}"/>
+                                            <StackLayout Grid.Column="2"
+                                                         IsVisible="{Binding SwitchToGetCoeff, Mode=TwoWay}"
+                                                         VerticalOptions="FillAndExpand" 
+                                                         HorizontalOptions="StartAndExpand">
+                                                <Label Text="{Binding ActualCoefficient}" 
+                                                       FontSize="14" 
+                                                       TextColor="Black" 
+                                                       VerticalOptions="CenterAndExpand" 
+                                                       HorizontalOptions="StartAndExpand"
+                                                       HorizontalTextAlignment="Start"/>
+                                            </StackLayout>
+                                            <StackLayout Grid.Column="3"
+                                                         IsVisible="{Binding SwitchToGetCoeff, Mode=TwoWay}"
+                                                         VerticalOptions="FillAndExpand" 
+                                                         HorizontalOptions="EndAndExpand">
+                                                <Frame BorderColor="Black"
+                                                       VerticalOptions="CenterAndExpand" 
+                                                       HorizontalOptions="StartAndExpand"
+                                                       Padding="0">
+                                                    <Entry Placeholder="Note" 
+                                                       WidthRequest="80"
+                                                       Margin="0,0,2,2"
+                                                       MaxLength="5"
+                                                       Text="{Binding Note, Mode=TwoWay}" 
+                                                       VerticalOptions="CenterAndExpand" 
+                                                       HorizontalOptions="FillAndExpand" 
+                                                       Keyboard="Numeric"/>
+                                                </Frame>
+                                            </StackLayout>
+                                        </Grid>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <!-- Group Header Customization-->
+                        <ListView.GroupHeaderTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout BackgroundColor="#4682B4">
+                                        <Label Text="{Binding LongName}" TextColor="White" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.GroupHeaderTemplate>
+                        <!-- End Group Header Customization -->
+                    </ListView>
+                    <Button BackgroundColor="White"
+                            BorderColor="LightGray"
+                            VerticalOptions="EndAndExpand"
+                            BorderWidth="1"
+                            Text="Calculer la note"
+                            TextColor="Black"
+                            Clicked="Calculer_Clicked"/>
+                </StackLayout>
+                <StackLayout x:Name="MorocOption2Stack" IsVisible="False">
+                    <StackLayout Orientation="Horizontal">
+                        <Frame BorderColor="Black"
+                            VerticalOptions="StartAndExpand" 
+                            HorizontalOptions="StartAndExpand"
+                            Padding="0">
+                            <Entry x:Name="MorocOption2Entry1"
+                                Placeholder="Saisir votre Note du Régional" 
+                                WidthRequest="200"
+                                FontSize="14"
+                                Margin="0,0,2,2"
+                                VerticalOptions="CenterAndExpand" 
+                                HorizontalOptions="FillAndExpand" 
+                                Keyboard="Numeric"/>
+                        </Frame>
+                        <Label  Text="Coeff. : 0.25" 
+                                Grid.Column="0"
+                                FontSize="14" 
+                                TextColor="Black" 
+                                HorizontalTextAlignment="Start" 
+                                HorizontalOptions="EndAndExpand"
+                                VerticalOptions="CenterAndExpand"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Frame BorderColor="Black"
+                            VerticalOptions="StartAndExpand" 
+                            HorizontalOptions="StartAndExpand"
+                            Padding="0">
+                            <Entry x:Name="MorocOption2Entry2"
+                                Placeholder="Saisir votre Note de Classe" 
+                                WidthRequest="200"
+                                Margin="0,0,2,2"
+                                FontSize="14"
+                                VerticalOptions="CenterAndExpand" 
+                                HorizontalOptions="FillAndExpand" 
+                                Keyboard="Numeric"/>
+                        </Frame>
+                        <Label  Text="Coeff. : 0.25" 
+                                Grid.Column="0"
+                                FontSize="14" 
+                                TextColor="Black" 
+                                HorizontalTextAlignment="Start" 
+                                HorizontalOptions="EndAndExpand"
+                                VerticalOptions="CenterAndExpand"/>
+                    </StackLayout>
+                    
+                    <Grid BackgroundColor="Transparent"
+                        HeightRequest="40"
+                        ColumnSpacing="6"
+                        Padding="3"
+                        Margin="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label  Text="Matière" 
+                                Grid.Column="0"
+                                FontSize="14" 
+                                FontAttributes="Bold"
+                                TextColor="Black" 
+                                HorizontalTextAlignment="Start" 
+                                HorizontalOptions="StartAndExpand"
+                                VerticalOptions="Start"/>
+                        <Label Text="Coeff" 
+                                Grid.Column="2"
+                                FontSize="14" 
+                                FontAttributes="Bold"
+                                TextColor="Black" 
+                                VerticalOptions="Start" 
+                                HorizontalOptions="StartAndExpand"
+                                HorizontalTextAlignment="Start"/>
+                        <Label Grid.Column="3"
+                                Text="Note" 
+                                FontSize="14" 
+                                FontAttributes="Bold"
+                                TextColor="Black" 
+                                VerticalOptions="Start" 
+                                HorizontalOptions="StartAndExpand"
+                                HorizontalTextAlignment="Start"/>
+                    </Grid>
+                    <ListView ItemsSource="{Binding GroupedSubjectCoeffs}" 
+                              SelectionMode="None"
+                              HasUnevenRows="True"
+                              IsGroupingEnabled="true" 
+                              GroupDisplayBinding="{Binding LongName}" 
+                              GroupShortNameBinding="{Binding ShortName}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid RowSpacing="0" 
+                                          ColumnSpacing="0"
+                                          Padding="1,0,1,1"
+                                          Margin="0"
+                                          BackgroundColor="#4682B4">
+                                        <Grid BackgroundColor="White"
+                                              RowSpacing="0" 
+                                              ColumnSpacing="6"
+                                              Padding="2"
+                                              Margin="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="5*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                                <ColumnDefinition Width="2*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0" >
+                                                <Picker VerticalOptions="CenterAndExpand"
+                                                        HorizontalOptions="FillAndExpand"
+                                                        Margin="-2,0,0,0"
+                                                        ItemsSource="{Binding ListNames}"
+                                                        Title="{Binding ListTitle}"
+                                                        ItemDisplayBinding="{Binding Name}"
+                                                        IsVisible="{Binding ShowCourseName, Converter={StaticResource boolInverter}}"
+                                                        BackgroundColor="White"
+                                                        FontSize="14"
+                                                        TitleColor="Black"
+                                                        TextColor="Black"
+                                                        SelectedItem="{Binding SelectedItemFromList, Mode=TwoWay}"/>
+                                                <StackLayout VerticalOptions="CenterAndExpand" 
+                                                             HorizontalOptions="StartAndExpand"
+                                                             BackgroundColor="White"
+                                                             IsVisible="{Binding ShowCourseName, Mode=TwoWay}">
+                                                    <Label Text="{Binding Name, Mode=TwoWay}" FontSize="14" TextColor="Black" HorizontalTextAlignment="Start" VerticalOptions="CenterAndExpand"/>
+                                                </StackLayout>
+                                            </Grid>
+                                            <Switch Grid.Column="0" 
+                                                    IsVisible="{Binding ShowSwitchToGetCoeff,Mode=TwoWay}"
+                                                    IsToggled="{Binding SwitchToGetCoeff,Mode=TwoWay}"
+                                                    VerticalOptions="CenterAndExpand" 
+                                                    HorizontalOptions="EndAndExpand"/>
+                                            <CheckBox Grid.Column="1"
+                                                      IsVisible="{Binding ShowCoefficientChangeable, Mode=TwoWay}"
+                                                      IsChecked="{Binding CoefficientChangeable, Mode=TwoWay}"/>
+                                            <StackLayout Grid.Column="2"
+                                                         IsVisible="{Binding SwitchToGetCoeff, Mode=TwoWay}"
+                                                         VerticalOptions="FillAndExpand" 
+                                                         HorizontalOptions="StartAndExpand">
+                                                <Label Text="{Binding ActualCoefficient, StringFormat='{0:00.}'}" 
+                                                       FontSize="14" 
+                                                       TextColor="Black" 
+                                                       VerticalOptions="CenterAndExpand" 
+                                                       HorizontalOptions="StartAndExpand"
+                                                       HorizontalTextAlignment="Start"/>
+                                            </StackLayout>
+                                            <StackLayout Grid.Column="3"
+                                                         IsVisible="{Binding SwitchToGetCoeff, Mode=TwoWay}"
+                                                         VerticalOptions="FillAndExpand" 
+                                                         HorizontalOptions="EndAndExpand">
+                                                <Frame BorderColor="Black"
+                                                       VerticalOptions="CenterAndExpand" 
+                                                       HorizontalOptions="StartAndExpand"
+                                                       Padding="0">
+                                                    <Entry Placeholder="Note" 
+                                                       WidthRequest="80"
+                                                       Margin="0,0,2,2"
+                                                       MaxLength="5"
+                                                       Text="{Binding Note, Mode=TwoWay}" 
+                                                       VerticalOptions="CenterAndExpand" 
+                                                       HorizontalOptions="FillAndExpand" 
+                                                       Keyboard="Numeric"/>
+                                                </Frame>
+                                            </StackLayout>
+                                        </Grid>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <!-- Group Header Customization-->
+                        <ListView.GroupHeaderTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout BackgroundColor="#4682B4">
+                                        <Label Text="{Binding LongName}" TextColor="White" FontSize="Medium" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.GroupHeaderTemplate>
+                        <!-- End Group Header Customization -->
+                    </ListView>
+                    <Button BackgroundColor="White"
+                            BorderColor="LightGray"
+                            BorderWidth="1"
+                            VerticalOptions="EndAndExpand"
+                            Text="Calculer la note"
+                            TextColor="Black"
+                            Clicked="Calculer_Clicked"/>
+                </StackLayout>
+            </Grid>
+        </Frame>
+    </Grid>
+</ContentPage>

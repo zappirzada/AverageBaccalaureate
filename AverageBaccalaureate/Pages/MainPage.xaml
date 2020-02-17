@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             NavigationPage.HasNavigationBar="False"
+             xmlns:iOS="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             iOS:Page.UseSafeArea="True"
+             mc:Ignorable="d"
+             BackgroundColor="#4682B4"
+             x:Class="AverageBaccalaureate.MainPage">
+    <Grid>
+        <Grid x:Name="UpperStack" 
+                     VerticalOptions="FillAndExpand"
+                     HorizontalOptions="FillAndExpand"
+                     Padding="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.GestureRecognizers>
+                <SwipeGestureRecognizer Direction="Up" Swiped="SwipeGestureRecognizer_Swiped"/>
+            </Grid.GestureRecognizers>
+            <Frame Padding="10"
+                   Grid.Row="0"
+                   CornerRadius="10"
+                   VerticalOptions="FillAndExpand"
+                   HorizontalOptions="FillAndExpand"
+                   BackgroundColor="White">
+                <StackLayout Spacing="1"
+                    VerticalOptions="StartAndExpand"
+                    HorizontalOptions="CenterAndExpand">
+                    <Image Aspect="AspectFit"
+                           Source="result.png"
+                           VerticalOptions="Start"/>
+                    <Label Text="Simulateur Moyenne BAC"
+                               FontAttributes="Bold"
+                               FontSize="22"
+                               TextColor="Black"
+                               VerticalOptions="Start"
+                               HorizontalOptions="CenterAndExpand" 
+                               HorizontalTextAlignment="Center"/>
+                    <Label VerticalOptions="Start" 
+                               FontSize="16"
+                               HorizontalOptions="StartAndExpand" 
+                               HorizontalTextAlignment="Start"
+                               TextColor="Black">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Chers bacheliers, ce programme vous invite à calculer votre moyenne de Bac il suffit de:&#x0a;"/>
+                                <Span Text="1. Choisir votre pays et votre Filière, puis validez !&#x0a;"/>
+                                <Span Text="&#x09;2. Saisir les notes dans le formulaire !&#x0a;"/>
+                                <Span Text="&#x09;3. Enfin la moyenne du BAC sera affichée !&#x0a;"/>
+                                <Span Text="Veuillez partager cette application avec votre entourage :)&#x0a;"/>
+                                <Span Text="-- Bonne Chance --"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+            </Frame>
+        </Grid>
+        <StackLayout x:Name="MiddleStack" IsVisible="False" Opacity="0.2" BackgroundColor="Black" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="PaysAnimateEvent"/>
+                <SwipeGestureRecognizer Direction="Down" Swiped="SwipeGestureRecognizer_Swiped"/>
+            </StackLayout.GestureRecognizers>
+        </StackLayout>
+        <StackLayout x:Name="LowerStack" 
+                     IsVisible="True"
+                     VerticalOptions="FillAndExpand"
+                     HorizontalOptions="FillAndExpand"
+                     Padding="10">
+            <StackLayout.GestureRecognizers>
+                <SwipeGestureRecognizer Direction="Down" Swiped="SwipeGestureRecognizer_Swiped"/>
+            </StackLayout.GestureRecognizers>
+            <Frame Padding="10"
+                   CornerRadius="10"
+                   VerticalOptions="FillAndExpand"
+                   HorizontalOptions="FillAndExpand"
+                   BackgroundColor="#4682B4">
+                <StackLayout
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="CenterAndExpand"
+                    Spacing="0">
+                    <StackLayout
+                            x:Name="Pays"
+                            Spacing="0"
+                            HeightRequest="70"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="Start">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="PaysAnimateEvent"/>
+                            <SwipeGestureRecognizer Direction="Up" Swiped="SwipeGestureRecognizer_Swiped"/>
+                            <SwipeGestureRecognizer Direction="Down" Swiped="SwipeGestureRecognizer_Swiped"/>
+                        </StackLayout.GestureRecognizers>
+                        <StackLayout Orientation="Horizontal"
+                                     WidthRequest="100">
+                            <Image Source="ic_uparrow" 
+                                   Aspect="AspectFit"
+                                   HorizontalOptions="StartAndExpand"/>
+                            <Image Source="ic_uparrow" 
+                                   Aspect="AspectFit"
+                                   HorizontalOptions="EndAndExpand"/>
+                        </StackLayout>
+                        <Label Text="Choisir un Pays"
+                               TextColor="White"
+                               FontAttributes="Bold"
+                               FontSize="Default" 
+                               VerticalOptions="Start"
+                               HorizontalOptions="CenterAndExpand" 
+                               HorizontalTextAlignment="Center"/>
+                    </StackLayout>
+                    <StackLayout VerticalOptions="StartAndExpand"  
+                                 HorizontalOptions="CenterAndExpand">
+                        <StackLayout VerticalOptions="Start" 
+                                 Orientation="Horizontal" 
+                                 HorizontalOptions="CenterAndExpand">
+                            <Frame x:Name="CountryFrance"
+                               ClassId="1"
+                               Padding="4"
+                               BorderColor="White"
+                               BackgroundColor="Transparent"
+                               HorizontalOptions="Start" 
+                               VerticalOptions="Start">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="CountrySelected"/>
+                                </Frame.GestureRecognizers>
+                                <StackLayout>
+                                    <Frame HeightRequest="110"
+                                           WidthRequest="150" 
+                                           CornerRadius="8" 
+                                           Padding="0">
+                                        <Image Aspect="AspectFill" 
+                                               HeightRequest="110" 
+                                               WidthRequest="150"
+                                               x:Name="FranceImage"/>
+                                    </Frame>
+                                    <Label HorizontalOptions="CenterAndExpand" 
+                                   Text="France" 
+                                   TextColor="White" 
+                                   FontAttributes="Bold"/>
+                                </StackLayout>
+                            </Frame>
+                            <Frame x:Name="CountryMoroc"
+                               ClassId="2"
+                               Padding="4" 
+                               BorderColor="White" 
+                               BackgroundColor="Transparent"
+                               HorizontalOptions="End" 
+                               VerticalOptions="Start">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="CountrySelected"/>
+                                </Frame.GestureRecognizers>
+                                <StackLayout>
+                                    <Frame HeightRequest="110" 
+                                       WidthRequest="150" 
+                                       Padding="0"
+                                       CornerRadius="8">
+                                        <Image Aspect="AspectFill" 
+                                               HeightRequest="110" 
+                                               WidthRequest="150"
+                                               x:Name="MorocImage"/>
+                                    </Frame>
+                                    <Label HorizontalOptions="CenterAndExpand" 
+                                       Text="Maroc" 
+                                       TextColor="White" 
+                                       FontAttributes="Bold"/>
+                                </StackLayout>
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout x:Name="StackFrancePicker"
+                                     IsVisible="False"
+                                     Margin="0,20,0,0"
+                                     VerticalOptions="Start"
+                                     HorizontalOptions="FillAndExpand">
+                            <Label Text="Choisir votre Filière de BAC"
+                                   FontAttributes="Bold"
+                                   TextColor="White"/>
+                            <Frame Padding="0"
+                               CornerRadius="4">
+                                <Picker x:Name="FrancePicker" 
+                                    VerticalOptions="Start"
+                                    HorizontalOptions="FillAndExpand"
+                                    Title="--- Filière BAC ---"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    BackgroundColor="White"
+                                    TitleColor="Black"
+                                    TextColor="#4682B4"
+                                    SelectedIndexChanged="LastPicker_SelectedIndexChanged"/>
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout x:Name="StackMorocoPicker"
+                                     IsVisible="False"
+                                     Margin="0,20,0,0"
+                                     VerticalOptions="Start"
+                                     HorizontalOptions="FillAndExpand">
+                            <Label Text="Choisir votre Simulation"
+                                   FontAttributes="Bold"
+                                   TextColor="White"/>
+                            <Frame Padding="0"
+                               CornerRadius="4">
+                                <Picker x:Name="MorocoPicker" 
+                                    VerticalOptions="Start"
+                                    HorizontalOptions="FillAndExpand"
+                                    Title="--- Simulation ---"
+                                    ItemDisplayBinding="{Binding .}"
+                                    BackgroundColor="White"
+                                    TitleColor="Black"
+                                    TextColor="#4682B4"
+                                    SelectedIndexChanged="MorocPicker_SelectedIndexChanged"/>
+                            </Frame>
+                        </StackLayout>
+                        <StackLayout x:Name="StackSimulationPicker"
+                                     IsVisible="False"
+                                     Margin="0,20,0,0"
+                                     VerticalOptions="Start"
+                                     HorizontalOptions="FillAndExpand">
+                            <Label Text="Choisir votre Filière de BAC"
+                                   FontAttributes="Bold"
+                                   TextColor="White"/>
+                            <Frame Padding="0"
+                               CornerRadius="4">
+                                <Picker x:Name="SimulationPicker" 
+                                    VerticalOptions="Start"
+                                    HorizontalOptions="FillAndExpand"
+                                    Title="--- Filière BAC ---"
+                                    BackgroundColor="White"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    TitleColor="Black"
+                                    TextColor="#4682B4"
+                                    SelectedIndexChanged="LastPicker_SelectedIndexChanged"/>
+                            </Frame>
+                        </StackLayout>
+                        <Button x:Name="ButtonValider"
+                                IsVisible="False"
+                                Margin="0,20,0,0"
+                                BackgroundColor="White"
+                                Text="Valider"
+                                TextColor="Black"
+                                Clicked="Valider_Clicked"/>
+                    </StackLayout>
+                    
+
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </Grid>
+</ContentPage>

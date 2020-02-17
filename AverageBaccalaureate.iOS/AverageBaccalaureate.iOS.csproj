@@ -132,4 +132,14 @@
       <Name>AverageBaccalaureate</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\congratulations.jpg" />
+    <BundleResource Include="Resources\facebook.png" />
+    <BundleResource Include="Resources\flag_france.png" />
+    <BundleResource Include="Resources\flag_morocco.png" />
+    <BundleResource Include="Resources\goodluck.jpg" />
+    <BundleResource Include="Resources\result.png" />
+    <BundleResource Include="Resources\ic_home.png" />
+    <BundleResource Include="Resources\ic_uparrow.png" />
+  </ItemGroup>
 </Project>
