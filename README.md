@@ -5,5 +5,5 @@ This application allows you to simulate in a few seconds your BAC average. If yo
 
 
 
-![Image description](https://github.com/zappirzada/AverageBaccalaureate/blob/master/Working-Gif.gif)
+![Android Working](https://github.com/zappirzada/AverageBaccalaureate/blob/master/Working_GIF.gif)
 
